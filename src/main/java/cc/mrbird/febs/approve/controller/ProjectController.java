@@ -1,0 +1,119 @@
+package cc.mrbird.febs.approve.controller;
+
+import cc.mrbird.febs.common.annotation.Log;
+import cc.mrbird.febs.common.utils.FebsUtil;
+import cc.mrbird.febs.common.entity.FebsConstant;
+import cc.mrbird.febs.common.controller.BaseController;
+import cc.mrbird.febs.common.entity.FebsResponse;
+import cc.mrbird.febs.common.entity.QueryRequest;
+import cc.mrbird.febs.common.exception.FebsException;
+import cc.mrbird.febs.approve.entity.Project;
+import cc.mrbird.febs.approve.service.IProjectService;
+import com.wuwenze.poi.ExcelKit;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+import java.util.List;
+import java.util.Map;
+
+/**
+ *  Controller
+ *
+ * @author MrBird
+ * @date 2019-09-24 18:05:45
+ */
+@Slf4j
+@Validated
+@Controller
+public class ProjectController extends BaseController {
+
+    @Autowired
+    private IProjectService projectService;
+
+    @GetMapping(FebsConstant.VIEW_PREFIX + "project")
+    public String projectIndex(){
+        return FebsUtil.view("project/project");
+    }
+
+    @GetMapping("project")
+    @ResponseBody
+    @RequiresPermissions("project:list")
+    public FebsResponse getAllProjects(Project project) {
+        return new FebsResponse().success().data(projectService.findProjects(project));
+    }
+
+    @GetMapping("project/list")
+    @ResponseBody
+    @RequiresPermissions("project:list")
+    public FebsResponse projectList(QueryRequest request, Project project) {
+        Map<String, Object> dataTable = getDataTable(this.projectService.findProjects(request, project));
+        return new FebsResponse().success().data(dataTable);
+    }
+
+    @Log("新增Project")
+    @PostMapping("project")
+    @ResponseBody
+    @RequiresPermissions("project:add")
+    public FebsResponse addProject(@Valid Project project) throws FebsException {
+        try {
+            this.projectService.createProject(project);
+            return new FebsResponse().success();
+        } catch (Exception e) {
+            String message = "新增Project失败";
+            log.error(message, e);
+            throw new FebsException(message);
+        }
+    }
+
+    @Log("删除Project")
+    @GetMapping("project/delete")
+    @ResponseBody
+    @RequiresPermissions("project:delete")
+    public FebsResponse deleteProject(Project project) throws FebsException {
+        try {
+            this.projectService.deleteProject(project);
+            return new FebsResponse().success();
+        } catch (Exception e) {
+            String message = "删除Project失败";
+            log.error(message, e);
+            throw new FebsException(message);
+        }
+    }
+
+    @Log("修改Project")
+    @PostMapping("project/update")
+    @ResponseBody
+    @RequiresPermissions("project:update")
+    public FebsResponse updateProject(Project project) throws FebsException {
+        try {
+            this.projectService.updateProject(project);
+            return new FebsResponse().success();
+        } catch (Exception e) {
+            String message = "修改Project失败";
+            log.error(message, e);
+            throw new FebsException(message);
+        }
+    }
+
+    @PostMapping("project/excel")
+    @ResponseBody
+    @RequiresPermissions("project:export")
+    public void export(QueryRequest queryRequest, Project project, HttpServletResponse response) throws FebsException {
+        try {
+            List<Project> projects = this.projectService.findProjects(queryRequest, project).getRecords();
+            ExcelKit.$Export(Project.class, response).downXlsx(projects, false);
+        } catch (Exception e) {
+            String message = "导出Excel失败";
+            log.error(message, e);
+            throw new FebsException(message);
+        }
+    }
+}

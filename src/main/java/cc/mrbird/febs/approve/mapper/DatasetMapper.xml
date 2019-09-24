@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.approve.mapper.DatasetMapper">
+
+    <resultMap id="dataset" type="cc.mrbird.febs.approve.entity.Dataset">
+        <id column="id" jdbcType="bigint" property="id"/>
+        <result column="code" jdbcType="varchar" property="code"/>
+        <result column="comments" jdbcType="varchar" property="comments"/>
+        <result column="data_source_code" jdbcType="varchar" property="dataSourceCode"/>
+        <result column="data_source_type" jdbcType="varchar" property="dataSourceType"/>
+        <result column="url" jdbcType="varchar" property="url"/>
+        <result column="uat_url" jdbcType="varchar" property="uatUrl"/>
+        <result column="req_type" jdbcType="varchar" property="reqType"/>
+        <result column="content_type" jdbcType="varchar" property="contentType"/>
+        <result column="timeout" jdbcType="int" property="timeout"/>
+        <result column="retry_times" jdbcType="int" property="retryTimes"/>
+        <result column="sleep_interval" jdbcType="int" property="sleepInterval"/>
+        <result column="select_sql" jdbcType="varchar" property="selectSql"/>
+        <result column="status" jdbcType="int" property="status"/>
+        <result column="create_time" jdbcType="datetime" property="createTime"/>
+        <result column="update_time" jdbcType="datetime" property="updateTime"/>
+    </resultMap>
+</mapper>

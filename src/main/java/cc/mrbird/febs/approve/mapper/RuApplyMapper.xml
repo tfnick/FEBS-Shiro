@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.approve.mapper.RuApplyMapper">
+
+    <resultMap id="ruApply" type="cc.mrbird.febs.approve.entity.RuApply">
+        <id column="id" jdbcType="int" property="id"/>
+        <result column="order_id" jdbcType="varchar" property="orderId"/>
+        <result column="serial_number" jdbcType="varchar" property="serialNumber"/>
+        <result column="req_time" jdbcType="varchar" property="reqTime"/>
+        <result column="etype" jdbcType="varchar" property="etype"/>
+        <result column="name" jdbcType="varchar" property="name"/>
+        <result column="idcard" jdbcType="varchar" property="idcard"/>
+        <result column="mobile" jdbcType="varchar" property="mobile"/>
+        <result column="bankcard_num" jdbcType="varchar" property="bankcardNum"/>
+        <result column="detail" jdbcType="varchar" property="detail"/>
+        <result column="credit_score" jdbcType="varchar" property="creditScore"/>
+        <result column="tid" jdbcType="varchar" property="tid"/>
+        <result column="loan_cont_no" jdbcType="varchar" property="loanContNo"/>
+        <result column="amount" jdbcType="decimal" property="amount"/>
+        <result column="channel" jdbcType="varchar" property="channel"/>
+        <result column="parent_order_id" jdbcType="varchar" property="parentOrderId"/>
+        <result column="gid" jdbcType="varchar" property="gid"/>
+        <result column="sn" jdbcType="varchar" property="sn"/>
+        <result column="cid" jdbcType="varchar" property="cid"/>
+        <result column="uuid" jdbcType="varchar" property="uuid"/>
+        <result column="mobid" jdbcType="varchar" property="mobid"/>
+        <result column="project_code" jdbcType="varchar" property="projectCode"/>
+        <result column="xml_process_id" jdbcType="varchar" property="xmlProcessId"/>
+        <result column="create_time" jdbcType="datetime" property="createTime"/>
+        <result column="update_time" jdbcType="datetime" property="updateTime"/>
+    </resultMap>
+</mapper>
