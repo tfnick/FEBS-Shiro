@@ -1,0 +1,88 @@
+<style>
+    #project-update {
+        padding: 20px 25px 25px 0;
+    }
+
+    #project-update .layui-treeSelect .ztree li a, .ztree li span {
+        margin: 0 0 2px 3px !important;
+    }
+</style>
+<div class="layui-fluid" id="project-update">
+    <form class="layui-form" action="" lay-filter="project-update-form">
+        <div class="layui-form-item febs-hide">
+            <label class="layui-form-label febs-form-item-require">id：</label>
+            <div class="layui-input-block">
+                <input type="text" name="id" data-th-value="${project.id}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label febs-form-item-require">唯一编码：</label>
+            <div class="layui-input-block">
+                <input type="text" name="code" minlength="32" maxlength="32" lay-verify="range" readonly
+                       autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">日限额：</label>
+            <div class="layui-input-block">
+                <input type="number" name="dailyLimit" lay-verify="required|number" min="-1" max="1000000" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">单价(分)：</label>
+            <div class="layui-input-block">
+                <input type="number" name="price" lay-verify="required|number" min="0" max="100000" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">描述：</label>
+            <div class="layui-input-block">
+                <textarea name="comments" maxlength="100" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item febs-hide">
+            <button class="layui-btn" lay-submit="" lay-filter="project-update-form-submit" id="submit"></button>
+        </div>
+    </form>
+</div>
+
+<script data-th-inline="javascript">
+    layui.use(['febs', 'form', 'formSelects', 'validate', 'treeSelect'], function () {
+        var $ = layui.$,
+            febs = layui.febs,
+            layer = layui.layer,
+            formSelects = layui.formSelects,
+            treeSelect = layui.treeSelect,
+            form = layui.form,
+            project = [[${project}]],
+            $view = $('#project-update'),
+            validate = layui.validate;
+
+        form.verify(validate);
+        form.render();
+
+        initValue();
+
+        function initValue() {
+            form.val("project-update-form", {
+                "code": project.code,
+                "dailyLimit": project.dailyLimit,
+                "price": project.price,
+                "comments": project.comments
+            });
+        }
+
+        form.on('submit(project-update-form-submit)', function (data) {
+            if (febs.nativeEqual(data.field, project)) {
+                febs.alert.warn('数据未作任何修改！');
+                return false;
+            }
+            febs.post(ctx + 'project/update', data.field, function () {
+                layer.closeAll();
+                febs.alert.success('修改成功');
+                $('#febs-project').find('#query').click();
+            });
+            return false;
+        });
+    });
+</script>

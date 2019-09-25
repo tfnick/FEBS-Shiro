@@ -39,6 +39,7 @@ public class ${className}Controller extends BaseController {
     private I${className}Service ${className?uncap_first}Service;
 
     @GetMapping(FebsConstant.VIEW_PREFIX + "${className?uncap_first}")
+    @RequiresPermissions("${className?uncap_first}:list")
     public String ${className?uncap_first}Index(){
         return FebsUtil.view("${className?uncap_first}/${className?uncap_first}");
     }
@@ -103,7 +104,7 @@ public class ${className}Controller extends BaseController {
         }
     }
 
-    @PostMapping("${className?uncap_first}/excel")
+    @GetMapping("${className?uncap_first}/excel")
     @ResponseBody
     @RequiresPermissions("${className?uncap_first}:export")
     public void export(QueryRequest queryRequest, ${className} ${className?uncap_first}, HttpServletResponse response) throws FebsException {

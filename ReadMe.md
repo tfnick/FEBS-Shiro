@@ -159,6 +159,13 @@ FEBS-Vue | FEBS-Shiro前后端分离版本，前端架构采用Vue全家桶。 |
 ![treatme](screenshot/treatme.jpg)
 
 
+### 新特性
+
+- 引入级联选择组件，多选组件 https://fly.layui.com/extend/selectN,selectM/
+
+- 约定，最多弹出2层窗口
+
+
 ### 其他
 
 logo生成 https://www.logoko.com.cn/

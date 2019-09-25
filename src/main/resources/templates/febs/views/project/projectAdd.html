@@ -1,0 +1,73 @@
+<style>
+    #project-add {
+        padding: 20px 25px 25px 0;
+    }
+</style>
+<div class="layui-fluid" id="project-add">
+    <form class="layui-form" action="" lay-filter="project-add-form">
+
+        <input type="hidden" name="id" value="" />
+
+        <div class="layui-form-item">
+            <label class="layui-form-label febs-form-item-require">唯一编码：</label>
+            <div class="layui-input-block">
+                <input type="text" name="code" minlength="32" maxlength="32" lay-verify="range" readonly
+                        autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">日限额：</label>
+            <div class="layui-input-block">
+                <input type="number" name="dailyLimit" lay-verify="required|number" min="-1" max="1000000" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">单价(分)：</label>
+            <div class="layui-input-block">
+                <input type="number" name="price" lay-verify="required|number" min="0" max="100000" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">描述：</label>
+            <div class="layui-input-block">
+                <textarea name="comments" maxlength="100" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item febs-hide">
+            <button class="layui-btn" lay-submit="" lay-filter="project-add-form-submit" id="submit"></button>
+            <button type="reset" class="layui-btn" id="reset"></button>
+        </div>
+    </form>
+</div>
+
+<script>
+    //新增時自動生成項目編碼
+    function guid() {
+        function S4() {
+            return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+        }
+        return (S4()+S4()+S4()+S4()+S4()+S4()+S4()+S4());
+    }
+
+    layui.use(['jquery', 'laydate', 'form', 'table', 'febs', 'treeSelect',"validate"], function () {
+        var $ = layui.$,
+            febs = layui.febs,
+            form = layui.form,
+            $view = $('#project-add'),
+            validate = layui.validate;
+
+        form.verify(validate);
+        form.render();
+
+        $view.find("input[name='code']").val(guid());
+
+        form.on('submit(project-add-form-submit)', function (data) {
+            febs.post(ctx + 'project', data.field, function () {
+                layer.closeAll();
+                febs.alert.success('新增成功');
+                $('#febs-project').find('#query').click();
+            });
+            return false;
+        });
+    });
+</script>

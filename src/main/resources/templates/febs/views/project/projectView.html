@@ -1,0 +1,35 @@
+<div class="layui-fluid" id="project-update" xmlns="http://www.w3.org/1999/html">
+    <form class="layui-form" action="" lay-filter="project-update-form">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label febs-form-item-require">id：</label>
+            <div class="layui-input-block">
+                <input class="layui-input" th:value="${project.id}" readonly/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label febs-form-item-require">唯一编码：</label>
+            <div class="layui-input-block">
+                <input class="layui-input" th:value="${project.code}" readonly/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">日限额：</label>
+            <div class="layui-input-block">
+                <input class="layui-input" th:value="${project.dailyLimit}" readonly/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">单价(分)：</label>
+            <div class="layui-input-block">
+                <input class="layui-input" th:value="${project.price}" readonly/>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">描述：</label>
+            <div class="layui-input-block">
+                <textarea name="comments" maxlength="100" class="layui-textarea" th:text="${#strings.defaultString(project.comments,'未填写')}" readonly></textarea>
+            </div>
+        </div>
+    </form>
+</div>
