@@ -1,4 +1,4 @@
-package cc.mrbird.febs.message.handler;
+package cc.mrbird.febs.message.cosumer;
 
 public class S0a1ResConsumerListener {
 }

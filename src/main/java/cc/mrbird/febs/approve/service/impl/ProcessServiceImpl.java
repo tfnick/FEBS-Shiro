@@ -3,8 +3,8 @@ package cc.mrbird.febs.approve.service.impl;
 import cc.mrbird.febs.approve.entity.Process;
 import cc.mrbird.febs.approve.mapper.ProcessMapper;
 import cc.mrbird.febs.approve.service.IProcessService;
-import cc.mrbird.febs.common.entity.QueryRequest;
 import org.springframework.stereotype.Service;
+import cc.mrbird.febs.common.entity.QueryRequest;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +19,8 @@ import java.util.List;
 /**
  *  Service实现
  *
- * @author MrBird
- * @date 2019-09-24 18:05:47
+ * @author YangXiao
+ * @date 2019-09-25 23:37:42
  */
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
