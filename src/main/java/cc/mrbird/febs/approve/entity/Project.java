@@ -68,11 +68,12 @@ public class Project {
 
     /*
     @TableField(exist = false)
-    private String xxViewField;
+    private String someViewField;
     */
 
     public Project transformViewFields(){
         //TODO set value for all field with annotation @TableField(exist = false)
+        //and all the value will display on client page instead of dictionary code
 
         return this;
     }

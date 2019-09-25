@@ -174,12 +174,6 @@ public class ProjectController extends BaseController {
     }
 
 
-
-
-
-
-
-
     private void resolveModel(Project project,Model model, Boolean transform) {
         model.addAttribute("project", project);
         if (transform && project != null) {
