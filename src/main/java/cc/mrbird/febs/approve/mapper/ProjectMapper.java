@@ -6,8 +6,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 /**
  *  Mapper
  *
- * @author MrBird
- * @date 2019-09-25 11:04:12
+ * @author YangXiao
+ * @date 2019-09-25 23:33:25
  */
 public interface ProjectMapper extends BaseMapper<Project> {
 

@@ -11,8 +11,8 @@ import java.util.List;
 /**
  *  Service接口
  *
- * @author MrBird
- * @date 2019-09-25 11:04:12
+ * @author YangXiao
+ * @date 2019-09-25 23:33:25
  */
 public interface IProjectService extends IService<Project> {
     /**
@@ -52,5 +52,4 @@ public interface IProjectService extends IService<Project> {
      * @param project project
      */
     void deleteProject(Project project);
-
 }

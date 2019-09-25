@@ -32,8 +32,8 @@ import java.util.Map;
 /**
  *  Controller
  *
- * @author MrBird
- * @date 2019-09-25 11:04:12
+ * @author YangXiao
+ * @date 2019-09-25 23:33:25
  */
 @Slf4j
 @Validated
@@ -43,11 +43,32 @@ public class ProjectController extends BaseController {
     @Autowired
     private IProjectService projectService;
 
-    //view
     @GetMapping(FebsConstant.VIEW_PREFIX + "project")
     @RequiresPermissions("project:list")
     public String projectIndex(){
         return FebsUtil.view("project/project");
+    }
+
+    @GetMapping(FebsConstant.VIEW_PREFIX + "project/view/{id}")
+    @RequiresPermissions("project:view")
+    public String projectView(@NotBlank(message = "{required}") @PathVariable String id,Model model){
+        Project project = this.projectService.getById(id);
+        resolveModel(project, model, true);
+        return FebsUtil.view("project/projectView");
+    }
+
+    @GetMapping(FebsConstant.VIEW_PREFIX + "project/update/{id}")
+    @RequiresPermissions("project:update")
+    public String projectUpdate(@NotBlank(message = "{required}") @PathVariable String id,Model model){
+        Project project = this.projectService.getById(id);
+        resolveModel(project, model, false);
+        return FebsUtil.view("project/projectUpdate");
+    }
+
+    @GetMapping(FebsConstant.VIEW_PREFIX + "project/add")
+    @RequiresPermissions("project:add")
+    public String projectAdd(){
+        return FebsUtil.view("project/projectAdd");
     }
 
 
@@ -97,7 +118,7 @@ public class ProjectController extends BaseController {
         }
     }
 
-    @Log("删除Project")
+    @Log("批量删除Project")
     @PostMapping("project/batchDelete")
     @ResponseBody
     @RequiresPermissions("project:delete")
@@ -145,8 +166,6 @@ public class ProjectController extends BaseController {
         }
     }
 
-    //<!-- 模板新增内容 -->
-
     @GetMapping("project/{id}")
     @ResponseBody
     @RequiresPermissions("project:view")
@@ -155,28 +174,6 @@ public class ProjectController extends BaseController {
     }
 
 
-
-    @GetMapping(FebsConstant.VIEW_PREFIX + "project/view/{id}")
-    @RequiresPermissions("project:view")
-    public String projectView(@NotBlank(message = "{required}") @PathVariable String id,Model model){
-        Project project = this.projectService.getById(id);
-        resolveModel(project, model, true);
-        return FebsUtil.view("project/projectView");
-    }
-
-    @GetMapping(FebsConstant.VIEW_PREFIX + "project/update/{id}")
-    @RequiresPermissions("project:update")
-    public String projectUpdate(@NotBlank(message = "{required}") @PathVariable String id,Model model){
-        Project project = this.projectService.getById(id);
-        resolveModel(project, model, false);
-        return FebsUtil.view("project/projectUpdate");
-    }
-
-    @GetMapping(FebsConstant.VIEW_PREFIX + "project/add")
-    @RequiresPermissions("project:add")
-    public String projectAdd(){
-        return FebsUtil.view("project/projectAdd");
-    }
 
 
     private void resolveModel(Project project,Model model, Boolean transform) {

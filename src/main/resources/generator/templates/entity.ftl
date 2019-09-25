@@ -41,27 +41,22 @@ public class ${className} {
     <#if (column.type = 'varchar' || column.type = 'text' || column.type = 'uniqueidentifier'
         || column.type = 'varchar2' || column.type = 'nvarchar' || column.type = 'VARCHAR2'
         || column.type = 'VARCHAR'|| column.type = 'CLOB' || column.type = 'char')>
-    @ExcelField(value = "${column.name}")
     private String ${column.field?uncap_first};
 
     </#if>
     <#if column.type = 'timestamp' || column.type = 'date' || column.type = 'datetime'||column.type = 'TIMESTAMP' || column.type = 'DATE' || column.type = 'DATETIME'>
-    @ExcelField(value = "${column.name}")
     private Date ${column.field?uncap_first};
 
     </#if>
     <#if column.type = 'int' || column.type = 'smallint'>
-    @ExcelField(value = "${column.name}")
     private Integer ${column.field?uncap_first};
 
     </#if>
     <#if column.type = 'bigint'>
-    @ExcelField(value = "${column.name}")
     private Long ${column.field?uncap_first};
 
     </#if>
     <#if column.type = 'double'>
-    @ExcelField(value = "${column.name}")
     private Double ${column.field?uncap_first};
 
     </#if>
@@ -70,7 +65,6 @@ public class ${className} {
 
     </#if>
     <#if column.type = 'decimal' || column.type = 'numeric'>
-    @ExcelField(value = "${column.name}")
     private BigDecimal ${column.field?uncap_first};
     </#if>
         </#list>

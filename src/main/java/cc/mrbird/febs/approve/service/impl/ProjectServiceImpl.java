@@ -14,15 +14,13 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
  *  Service实现
  *
- * @author MrBird
- * @date 2019-09-25 11:04:12
+ * @author YangXiao
+ * @date 2019-09-25 23:33:25
  */
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
@@ -65,5 +63,4 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
 	    // TODO 设置删除条件
 	    this.remove(wapper);
 	}
-
 }
