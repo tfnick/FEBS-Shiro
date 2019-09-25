@@ -43,6 +43,15 @@ public class ProjectController extends BaseController {
     @Autowired
     private IProjectService projectService;
 
+    //view
+    @GetMapping(FebsConstant.VIEW_PREFIX + "project")
+    @RequiresPermissions("project:list")
+    public String projectIndex(){
+        return FebsUtil.view("project/project");
+    }
+
+
+
     @GetMapping("project")
     @ResponseBody
     @RequiresPermissions("project:list")
@@ -145,11 +154,7 @@ public class ProjectController extends BaseController {
         return this.projectService.getById(id);
     }
 
-    @GetMapping(FebsConstant.VIEW_PREFIX + "project")
-    @RequiresPermissions("project:list")
-    public String projectIndex(){
-        return FebsUtil.view("project/project");
-    }
+
 
     @GetMapping(FebsConstant.VIEW_PREFIX + "project/view/{id}")
     @RequiresPermissions("project:view")

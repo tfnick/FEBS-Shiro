@@ -66,14 +66,15 @@ public class Project {
     private Date updateTime;
 
 
-    /*
-    @TableField(exist = false)
-    private String someViewField;
-    */
-
     public Project transformViewFields(){
-        //TODO set value for all field with annotation @TableField(exist = false)
-        //and all the value will display on client page instead of dictionary code
+        /*
+            @TableField(exist = false)
+            private String someViewField;
+
+            TODO Set value for all field with annotation @TableField(exist = false)
+            And all the value will display on client page instead of dictionary code
+
+         */
 
         return this;
     }

@@ -75,4 +75,17 @@ public class ${className} {
     </#if>
         </#list>
     </#if>
+
+    public ${className} transformViewFields(){
+        /*
+        @TableField(exist = false)
+        private String someViewField;
+
+        TODO Set value for all field with annotation @TableField(exist = false)
+        And the field will display on client page instead of dictionary code
+
+        */
+
+        return this;
+    }
 }
