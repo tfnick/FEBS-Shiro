@@ -1,5 +1,7 @@
 package cc.mrbird.febs.approve.controller;
 
+import cc.mrbird.febs.approve.entity.Project;
+import cc.mrbird.febs.approve.service.IProjectService;
 import cc.mrbird.febs.common.annotation.Log;
 import cc.mrbird.febs.common.utils.FebsUtil;
 import cc.mrbird.febs.common.entity.FebsConstant;
@@ -10,6 +12,7 @@ import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.approve.entity.Process;
 import cc.mrbird.febs.approve.service.IProcessService;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
+import com.google.common.collect.Maps;
 import org.springframework.ui.Model;
 import com.wuwenze.poi.ExcelKit;
 import lombok.extern.slf4j.Slf4j;
@@ -17,15 +20,13 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +34,7 @@ import java.util.Map;
  *  Controller
  *
  * @author YangXiao
- * @date 2019-09-25 23:37:42
+ * @date 2019-09-26 13:42:38
  */
 @Slf4j
 @Validated
@@ -43,9 +44,17 @@ public class ProcessController extends BaseController {
     @Autowired
     private IProcessService processService;
 
-    @GetMapping(FebsConstant.VIEW_PREFIX + "process")
+    @Autowired
+    private IProjectService projectService;
+
+    @GetMapping(FebsConstant.VIEW_PREFIX + "project/{projectId}/process")
     @RequiresPermissions("process:list")
-    public String processIndex(){
+    public String processIndex(@NotBlank(message = "{required}") @PathVariable String projectId, Model model){
+        Project project = this.projectService.getById(projectId);
+        if (project == null) {
+            return FebsUtil.view("error/500");
+        }
+        model.addAttribute("projectId", projectId);
         return FebsUtil.view("process/process");
     }
 

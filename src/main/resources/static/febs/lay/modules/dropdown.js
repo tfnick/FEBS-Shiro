@@ -37,6 +37,8 @@ layui.define(['jquery'], function (exports) {
                 self.index = INDEX;
 
                 var dropdown = $(HTML_DROPDOWN).attr('lay-index', self.index);
+
+                dropdown.css("z-index", "201910011212");
                 $('.' + CLS_DROPDOWN + '[lay-index="' + self.index + '"]').remove();
 
                 dropdown.html(self.createOptionsHtml(config));
@@ -59,6 +61,7 @@ layui.define(['jquery'], function (exports) {
             dropdown.css({
                 top: top - 10
             });
+
             var offsetWidth = (self.depth + 1) * self.config.width;
 
             if (left + offsetWidth > $(window).width()) {

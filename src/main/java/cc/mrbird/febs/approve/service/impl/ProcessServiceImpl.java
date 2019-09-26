@@ -1,7 +1,9 @@
 package cc.mrbird.febs.approve.service.impl;
 
 import cc.mrbird.febs.approve.entity.Process;
+import cc.mrbird.febs.approve.entity.Project;
 import cc.mrbird.febs.approve.mapper.ProcessMapper;
+import cc.mrbird.febs.approve.mapper.ProjectMapper;
 import cc.mrbird.febs.approve.service.IProcessService;
 import org.springframework.stereotype.Service;
 import cc.mrbird.febs.common.entity.QueryRequest;
@@ -20,7 +22,7 @@ import java.util.List;
  *  Service实现
  *
  * @author YangXiao
- * @date 2019-09-25 23:37:42
+ * @date 2019-09-26 13:42:38
  */
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
@@ -28,6 +30,9 @@ public class ProcessServiceImpl extends ServiceImpl<ProcessMapper, Process> impl
 
     @Autowired
     private ProcessMapper processMapper;
+
+    @Autowired
+    private ProjectMapper projectMapper;
 
     @Override
     public IPage<Process> findProcesss(QueryRequest request, Process process) {
@@ -47,12 +52,31 @@ public class ProcessServiceImpl extends ServiceImpl<ProcessMapper, Process> impl
     @Override
     @Transactional
     public void createProcess(Process process) {
+        Project project = projectMapper.selectById(process.getProjectId());
+        if (project == null) {
+            throw new RuntimeException("流程必须关联某个项目");
+        }
+        process.setProjectCode(project.getCode());
+
+        String[] breadCrumbs = process.getXmlProcessIdVersion().split("\\/");
+        process.setXmlProcessIdVersion(breadCrumbs[1]);
+
         this.save(process);
     }
 
     @Override
     @Transactional
     public void updateProcess(Process process) {
+
+        Project project = projectMapper.selectById(process.getProjectId());
+        if (project == null) {
+            throw new RuntimeException("流程必须关联某个项目");
+        }
+        process.setProjectCode(project.getCode());
+
+        String[] breadCrumbs = process.getXmlProcessIdVersion().split("\\/");
+        process.setXmlProcessIdVersion(breadCrumbs[1]);
+
         this.saveOrUpdate(process);
     }
 

@@ -6,8 +6,7 @@
         <id column="id" jdbcType="bigint" property="id"/>
         <result column="project_id" jdbcType="bigint" property="projectId"/>
         <result column="project_code" jdbcType="varchar" property="projectCode"/>
-        <result column="xml_process_id" jdbcType="varchar" property="xmlProcessId"/>
-        <result column="xml_process_version" jdbcType="varchar" property="xmlProcessVersion"/>
+        <result column="xml_process_id_version" jdbcType="varchar" property="xmlProcessIdVersion"/>
         <result column="status" jdbcType="int" property="status"/>
         <result column="create_time" jdbcType="datetime" property="createTime"/>
         <result column="update_time" jdbcType="datetime" property="updateTime"/>

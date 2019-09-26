@@ -14,7 +14,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
  *  Entity
  *
  * @author YangXiao
- * @date 2019-09-25 23:37:42
+ * @date 2019-09-26 13:42:38
  */
 @Excel(value = "process")
 @Data
@@ -43,21 +43,14 @@ public class Process {
     private String projectCode;
 
     /**
-     * 关联的xml流程id
+     * 关联的xml流程版本（含ID与版本信息）
      */
-    @TableField("xml_process_id")
-    @ExcelField(value = "xml_process_id")
-    private String xmlProcessId;
+    @TableField("xml_process_id_version")
+    @ExcelField(value = "xml_process_id_version")
+    private String xmlProcessIdVersion;
 
     /**
-     * 关联的xml流程version
-     */
-    @TableField("xml_process_version")
-    @ExcelField(value = "xml_process_version")
-    private String xmlProcessVersion;
-
-    /**
-     * 0:不可用 1:正常
+     * 0:下线状态 1:在线状态
      */
     @TableField("status")
     @ExcelField(value = "status")

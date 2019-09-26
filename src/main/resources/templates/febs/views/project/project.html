@@ -111,7 +111,7 @@
                             layui.each(checkStatus.data, function (key, item) {
                                 selIds.push(item.id)
                             });
-                            deleteSelectProject(selIds.join(','));
+                            deleteSelectEntity(selIds.join(','));
                         });
                     }
                 }
@@ -147,7 +147,7 @@
             }
             if (layEvent === 'del') {
                 febs.modal.confirm('删除', '确定删除该数据？', function () {
-                    deleteSelectProject(data.id);
+                    deleteSelectEntity(data.id);
                 });
             }
             if (layEvent === 'edit') {
@@ -162,8 +162,9 @@
                     }
                 });
             }
+            //注意1-N的这种写法，弹出层不允许挂参数
             if (layEvent === 'process') {
-                febs.modal.open('流程上线', 'process/', {
+                febs.modal.open('流程管理',ctx +  'project/' + data.id + '/process', {
                     area: ['100%','100%']
                 });
             }
@@ -224,7 +225,7 @@
             };
         }
 
-        function deleteSelectProject(selIds) {
+        function deleteSelectEntity(selIds) {
             var params = {ids: selIds};
             febs.post(ctx + 'project/batchDelete', params, function () {
                 febs.alert.success('删除成功');
