@@ -9,12 +9,13 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import cc.mrbird.febs.common.converter.TimeConverter;
 
 /**
  *  Entity
  *
  * @author YangXiao
- * @date 2019-09-26 13:42:38
+ * @date 2019-09-26 18:53:51
  */
 @Excel(value = "process")
 @Data
@@ -43,11 +44,18 @@ public class Process {
     private String projectCode;
 
     /**
-     * 关联的xml流程版本（含ID与版本信息）
+     * 关联的xml流程标识
      */
-    @TableField("xml_process_id_version")
-    @ExcelField(value = "xml_process_id_version")
-    private String xmlProcessIdVersion;
+    @TableField("xml_process_id")
+    @ExcelField(value = "xml_process_id")
+    private String xmlProcessId;
+
+    /**
+     * 关联的xml流程版本
+     */
+    @TableField("xml_process_version")
+    @ExcelField(value = "xml_process_version")
+    private String xmlProcessVersion;
 
     /**
      * 0:下线状态 1:在线状态
@@ -57,24 +65,39 @@ public class Process {
     private Integer status;
 
     /**
+     * 描述
+     */
+    @TableField("comments")
+    @ExcelField(value = "comments")
+    private String comments;
+
+    /**
      * 
      */
     @TableField("create_time")
-    @ExcelField(value = "create_time")
+    @ExcelField(value = "create_time", writeConverter = TimeConverter.class)
     private Date createTime;
 
     /**
      * 
      */
     @TableField("update_time")
-    @ExcelField(value = "update_time")
+    @ExcelField(value = "update_time", writeConverter = TimeConverter.class)
     private Date updateTime;
 
 
+    @TableField(exist = false)
+    private String xmlProcessIdVersion;
+
+    @TableField(exist = false)
+    private String createTimeFrom;
+    @TableField(exist = false)
+    private String createTimeTo;
+
     public Process transformViewFields(){
+        xmlProcessIdVersion = xmlProcessId + "/" + xmlProcessId + "__" + xmlProcessVersion;
         /*
-        @TableField(exist = false)
-        private String someViewField;
+
 
         TODO Set value for all field with annotation @TableField(exist = false)
         And the field will display on client page instead of dictionary code

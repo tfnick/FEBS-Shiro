@@ -1,8 +1,12 @@
 package cc.mrbird.febs.approve.service.impl;
 
+import cc.mrbird.febs.approve.entity.Process;
 import cc.mrbird.febs.approve.entity.Project;
 import cc.mrbird.febs.approve.mapper.ProjectMapper;
 import cc.mrbird.febs.approve.service.IProjectService;
+import cc.mrbird.febs.common.utils.SortUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import cc.mrbird.febs.common.entity.QueryRequest;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,8 +35,19 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
 
     @Override
     public IPage<Project> findProjects(QueryRequest request, Project project) {
-        LambdaQueryWrapper<Project> queryWrapper = new LambdaQueryWrapper<>();
-        // TODO 设置查询条件
+        QueryWrapper<Project> queryWrapper = new QueryWrapper<>();
+        // TODO 设置查询条件与排序
+        if (StringUtils.isNotEmpty(project.getCode())) {
+            queryWrapper.lambda().eq(Project::getCode, project.getCode());
+        }
+        if (StringUtils.isNotBlank(project.getCreateTimeFrom()) && StringUtils.isNotBlank(project.getCreateTimeTo())) {
+            queryWrapper.lambda()
+                    .ge(Project::getCreateTime, project.getCreateTimeFrom())
+                    .le(Project::getCreateTime, project.getCreateTimeTo());
+        }
+
+        SortUtil.handleWrapperSort(request, queryWrapper);
+
         Page<Project> page = new Page<>(request.getPageNum(), request.getPageSize());
         return this.page(page, queryWrapper);
     }

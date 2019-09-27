@@ -2,6 +2,7 @@ package cc.mrbird.febs.approve.entity;
 
 import java.util.Date;
 
+import cc.mrbird.febs.common.converter.TimeConverter;
 import lombok.Data;
 import com.wuwenze.poi.annotation.Excel;
 import com.wuwenze.poi.annotation.ExcelField;
@@ -60,16 +61,23 @@ public class Project {
      * 
      */
     @TableField("create_time")
-    @ExcelField(value = "create_time")
+    @ExcelField(value = "create_time", writeConverter = TimeConverter.class)
     private Date createTime;
 
     /**
      * 
      */
     @TableField("update_time")
-    @ExcelField(value = "update_time")
+    @ExcelField(value = "update_time", writeConverter = TimeConverter.class)
     private Date updateTime;
 
+
+
+
+    @TableField(exist = false)
+    private String createTimeFrom;
+    @TableField(exist = false)
+    private String createTimeTo;
 
     public Project transformViewFields(){
         /*

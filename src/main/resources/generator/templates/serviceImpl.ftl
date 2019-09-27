@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -31,7 +31,7 @@ public class ${className}ServiceImpl extends ServiceImpl<${className}Mapper, ${c
 
     @Override
     public IPage<${className}> find${className}s(QueryRequest request, ${className} ${className?uncap_first}) {
-        LambdaQueryWrapper<${className}> queryWrapper = new LambdaQueryWrapper<>();
+        QueryWrapper<${className}> queryWrapper = new QueryWrapper<>();
         // TODO 设置查询条件
         Page<${className}> page = new Page<>(request.getPageNum(), request.getPageSize());
         return this.page(page, queryWrapper);
@@ -39,7 +39,7 @@ public class ${className}ServiceImpl extends ServiceImpl<${className}Mapper, ${c
 
     @Override
     public List<${className}> find${className}s(${className} ${className?uncap_first}) {
-	    LambdaQueryWrapper<${className}> queryWrapper = new LambdaQueryWrapper<>();
+        QueryWrapper<${className}> queryWrapper = new QueryWrapper<>();
 		// TODO 设置查询条件
 		return this.baseMapper.selectList(queryWrapper);
     }

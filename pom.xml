@@ -8,33 +8,33 @@
     <name>febs</name>
     <description>Spring Boot,Shiro 权限管理系统，https://github.com/wuyouzhuguli/FEBS-Shiro</description>
 
-    <!--<parent>-->
-        <!--<groupId>org.springframework.boot</groupId>-->
-        <!--<artifactId>spring-boot-starter-parent</artifactId>-->
-        <!--<version>2.1.3.RELEASE</version>-->
-        <!--<relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
-    <!--</parent>-->
-
     <parent>
-        <artifactId>sc-data</artifactId>
-        <groupId>sc-data</groupId>
-        <version>1.0.1-SNAPSHOT</version>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.3.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
+    <!--<parent>-->
+        <!--<artifactId>sc-data</artifactId>-->
+        <!--<groupId>sc-data</groupId>-->
+        <!--<version>1.0.1-SNAPSHOT</version>-->
+    <!--</parent>-->
 
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <mybatis.plus.version>3.1.1</mybatis.plus.version>
+        <mybatis.plus.version>3.2.0</mybatis.plus.version>
         <swagger.ui>2.9.2</swagger.ui>
     </properties>
 
     <dependencies>
         <!-- Spring系列 -->
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.boot</groupId>-->
-            <!--<artifactId>spring-boot-starter-web</artifactId>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
@@ -216,35 +216,35 @@
         </dependency>
 
         <!--  utils -->
-        <dependency>
-            <groupId>sc-data</groupId>
-            <artifactId>general-utils</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>sc-data</groupId>-->
+            <!--<artifactId>general-utils</artifactId>-->
+            <!--<version>1.0.1-SNAPSHOT</version>-->
+        <!--</dependency>-->
 
         <!-- mvc starter -->
-        <dependency>
-            <groupId>sc-data</groupId>
-            <artifactId>wtf-framework-springmvc-starter</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.baomidou</groupId>
-                    <artifactId>mybatis-plus-boot-starter</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>sc-data</groupId>-->
+            <!--<artifactId>wtf-framework-springmvc-starter</artifactId>-->
+            <!--<version>1.0.0-SNAPSHOT</version>-->
+            <!--<exclusions>-->
+                <!--<exclusion>-->
+                    <!--<groupId>com.baomidou</groupId>-->
+                    <!--<artifactId>mybatis-plus-boot-starter</artifactId>-->
+                <!--</exclusion>-->
+            <!--</exclusions>-->
+        <!--</dependency>-->
 
         <!-- rocketmq -->
-        <dependency>
-            <groupId>org.apache.rocketmq</groupId>
-            <artifactId>rocketmq-spring-boot-starter</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.apache.rocketmq</groupId>-->
+            <!--<artifactId>rocketmq-spring-boot-starter</artifactId>-->
+        <!--</dependency>-->
 
-        <dependency>
-            <groupId>org.springframework.integration</groupId>
-            <artifactId>spring-integration-core</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.integration</groupId>-->
+            <!--<artifactId>spring-integration-core</artifactId>-->
+        <!--</dependency>-->
 
     </dependencies>
 
