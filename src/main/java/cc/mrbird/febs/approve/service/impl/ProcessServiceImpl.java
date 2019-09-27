@@ -92,9 +92,9 @@ public class ProcessServiceImpl extends ServiceImpl<ProcessMapper, Process> impl
         process.setXmlProcessId(breadCrumbs2[0]);
         process.setXmlProcessVersion(breadCrumbs2[1]);
 
-        Date date = new Date();
-        process.setCreateTime(date);
-        process.setUpdateTime(date);
+        Date operationDate = new Date();
+        process.setCreateTime(operationDate);
+        process.setUpdateTime(operationDate);
 
         this.save(process);
     }

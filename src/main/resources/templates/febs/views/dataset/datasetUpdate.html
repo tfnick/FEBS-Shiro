@@ -1,0 +1,224 @@
+<style>
+    #dataset-update {
+        padding: 20px 25px 25px 0;
+    }
+
+    #dataset-update .layui-treeSelect .ztree li a, .ztree li span {
+        margin: 0 0 2px 3px !important;
+    }
+</style>
+<div class="layui-fluid" id="dataset-update">
+    <form class="layui-form" action="" lay-filter="dataset-update-form">
+        <div class="layui-form-item febs-hide">
+            <label class="layui-form-label febs-form-item-require">id：</label>
+            <div class="layui-input-block">
+                <input type="text" name="id" data-th-value="${dataset.id}">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label febs-form-item-require">数据源：</label>
+            <div class="layui-input-block">
+                <select name="dataSourceCode" xm-select="radioSelect" xm-select-radio="" lay-verify="required">
+                    <option value="">请选择</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label febs-form-item-require">编码：</label>
+            <div class="layui-input-block">
+                <input type="text" name="code" minlength="4" maxlength="4" lay-verify="range"
+                       autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">类型：</label>
+            <div class="layui-input-block">
+                <select name="type" >
+                    <option value="">请选择</option>
+                    <option value="http" selected>HTTP</option>
+                    <option value="sql">SQL</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">Path：</label>
+            <div class="layui-input-block">
+                <input type="text" name="path"
+                       autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">Method：</label>
+            <div class="layui-input-block">
+                <select name="method" >
+                    <option value="">请选择</option>
+                    <option value="post" selected>POST</option>
+                    <option value="get">GET</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">ContentType：</label>
+            <div class="layui-input-block">
+                <select name="contentType" class="contentType" lay-filter="contentType">
+                    <option value="">请选择</option>
+                    <option value="application/x-www-form-urlencoded" selected>application/x-www-form-urlencoded</option>
+                    <option value="application/form-data">application/form-data</option>
+                    <option value="application/json">application/json</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">超时时间：</label>
+            <div class="layui-input-block">
+                <input type="number" name="timeout" min="1" max="60000" lay-verify="required|number"
+                       autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">重试次数：</label>
+            <div class="layui-input-block">
+                <input type="number" name="retryTimes" min="0" max="5" lay-verify="required|number"
+                       autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">重试间隔：</label>
+            <div class="layui-input-block">
+                <input type="number" name="sleepInterval" min="1" max="500" lay-verify="required|number"
+                       autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">状态：</label>
+            <div class="layui-input-block">
+                <select name="status" >
+                    <option value="">请选择</option>
+                    <option value="1" selected>正常</option>
+                    <option value="0">停用</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">SQL：</label>
+            <div class="layui-input-block">
+                <textarea name="selectSql" maxlength="1024" class="layui-textarea"></textarea>
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">描述：</label>
+            <div class="layui-input-block">
+                <textarea name="comments" maxlength="100" class="layui-textarea"></textarea>
+            </div>
+        </div>
+
+        <div class="layui-form-item febs-hide">
+            <button class="layui-btn" lay-submit="" lay-filter="dataset-update-form-submit" id="submit"></button>
+        </div>
+    </form>
+</div>
+
+<script data-th-inline="javascript">
+    layui.use(['febs', 'form', 'formSelects', 'validate', 'treeSelect','formSelects'], function () {
+        var $ = layui.$,
+            febs = layui.febs,
+            layer = layui.layer,
+            formSelects = layui.formSelects,
+            treeSelect = layui.treeSelect,
+            form = layui.form,
+            dataset = [[${dataset}]],
+            $view = $('#dataset-update'),
+            validate = layui.validate;
+
+        form.verify(validate);
+        form.render();
+
+        // formSelects.data('radioSelect', 'server', {
+        //     url: ctx + 'dataSourceDefinition',
+        //     linkage: true,
+        //     linkageWidth: 130
+        // });
+        //
+        // formSelects.config('radioSelect', {
+        //     success: function(id, url, val, result){
+        //         console.log("success: " + url);
+        //     },
+        //     error: function(id, url, val, err){
+        //         console.log("error: " + url);
+        //     }
+        // });
+        //
+        // formSelects.value('radioSelect', [dataset.dataSourceCode]);
+
+        initValue();
+
+        formSelects.render();
+
+        formSelects.config('radioSelect', {
+            searchUrl: ctx + 'dataSource',
+            response: {
+                statusCode: 200
+            },
+            beforeSuccess: function (id, url, searchVal, result) {
+                var data = result.data;
+                var tranData = [];
+                for (var i = 0; i < data.length; i++) {
+                    tranData.push({
+                        name: data[i].code,
+                        value: data[i].code
+                    })
+                }
+                result.data = tranData;
+                return result;
+            },
+            success: function () {
+                formSelects.value('radioSelect',[dataset.dataSourceCode]);
+            },
+            error: function (id, url, searchVal, err) {
+                console.error(err);
+                febs.alert.error('获取列表失败');
+            }
+        });
+
+        function initValue() {
+            form.val("dataset-update-form", {
+                "dataSourceCode": dataset.dataSourceCode,
+                "code": dataset.code,
+                "type": dataset.type,
+                "path": dataset.path,
+                "method": dataset.method,
+                "contentType": dataset.contentType,
+                "timeout": dataset.timeout,
+                "retryTimes": dataset.retryTimes,
+                "sleepInterval": dataset.sleepInterval,
+                "selectSql": dataset.selectSql,
+                "status": dataset.status,
+                "comments": dataset.comments
+            });
+        }
+
+
+        form.on('submit(dataset-update-form-submit)', function (data) {
+            if (febs.nativeEqual(data.field, dataset)) {
+                febs.alert.warn('数据未作任何修改！');
+                return false;
+            }
+            febs.post(ctx + 'dataset/update', data.field, function () {
+                layer.closeAll();
+                febs.alert.success('修改成功');
+                $('#febs-dataset').find('#query').click();
+            });
+            return false;
+        });
+    });
+</script>

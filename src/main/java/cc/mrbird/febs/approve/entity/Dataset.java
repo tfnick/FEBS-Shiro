@@ -15,7 +15,7 @@ import cc.mrbird.febs.common.converter.TimeConverter;
  *  Entity
  *
  * @author YangXiao
- * @date 2019-09-27 11:47:02
+ * @date 2019-09-27 15:50:29
  */
 @Excel(value = "dataset")
 @Data
@@ -42,13 +42,6 @@ public class Dataset {
     @TableField("code")
     @ExcelField(value = "code")
     private String code;
-
-    /**
-     * 描述
-     */
-    @TableField("comments")
-    @ExcelField(value = "comments")
-    private String comments;
 
     /**
      * 数据集类型，http sql
@@ -112,6 +105,13 @@ public class Dataset {
     @TableField("status")
     @ExcelField(value = "status")
     private Integer status;
+
+    /**
+     * 描述
+     */
+    @TableField("comments")
+    @ExcelField(value = "comments")
+    private String comments;
 
     /**
      * 创建时间

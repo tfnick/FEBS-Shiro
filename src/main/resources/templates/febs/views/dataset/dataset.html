@@ -1,15 +1,15 @@
-<div class="layui-fluid layui-anim febs-anim" id="febs-project" lay-title="项目管理">
+<div class="layui-fluid layui-anim febs-anim" id="febs-dataset" lay-title="数据集管理">
     <div class="layui-row febs-container">
         <div class="layui-col-md12">
             <div class="layui-card">
                 <div class="layui-card-body febs-table-full">
 
-                    <form class="layui-form layui-table-form" lay-filter="project-table-form" id="project-table-form">
+                    <form class="layui-form layui-table-form" lay-filter="dataset-table-form" id="dataset-table-form">
                         <div class="layui-row">
                             <div class="layui-col-md10">
                                 <div class="layui-form-item">
                                     <div class="layui-inline">
-                                        <label class="layui-form-label layui-form-label-sm">唯一编码</label>
+                                        <label class="layui-form-label layui-form-label-sm">编码</label>
                                         <div class="layui-input-inline">
                                             <input type="text" name="code" autocomplete="off" class="layui-input">
                                         </div>
@@ -17,7 +17,7 @@
                                     <div class="layui-inline">
                                         <label class="layui-form-label layui-form-label-sm">创建时间</label>
                                         <div class="layui-input-inline">
-                                            <input type="text" name="createTime" id="createTime-project" class="layui-input">
+                                            <input type="text" name="createTime" id="createTime-dataset" class="layui-input">
                                         </div>
                                     </div>
                                 </div>
@@ -37,7 +37,7 @@
                         </div>
                     </form>
 
-                    <table lay-filter="projectTable" lay-data="{id: 'projectTable'}"></table>
+                    <table lay-filter="datasetTable" lay-data="{id: 'datasetTable'}"></table>
                 </div>
             </div>
         </div>
@@ -45,29 +45,45 @@
 </div>
 
 <!-- action in table row -->
-<script type="text/html" id="project-option">
-    <span shiro:lacksPermission="project:view,project:update,project:delete">
+<script type="text/html" id="dataset-option">
+    <span shiro:lacksPermission="dataset:view,dataset:update,dataset:delete">
         <span class="layui-badge-dot febs-bg-orange"></span> 无权限
     </span>
-    <a lay-event="process" ><i
-            class="layui-icon febs-edit-area febs-blue">&#59788;</i></a>
-    <a lay-event="detail" shiro:hasPermission="project:view"><i
+    <a lay-event="input" ><i
+            class="layui-icon febs-edit-area febs-blue">&#xe7af;</i></a>
+    <a lay-event="output" ><i
+            class="layui-icon febs-edit-area febs-blue">&#xe7b6;</i></a>
+    <a lay-event="detail" shiro:hasPermission="dataset:view"><i
             class="layui-icon febs-edit-area febs-green">&#xe7a5;</i></a>
-    <a lay-event="edit" shiro:hasPermission="project:update"><i
+    <a lay-event="edit" shiro:hasPermission="dataset:update"><i
             class="layui-icon febs-edit-area febs-blue">&#xe7a4;</i></a>
-    <a lay-event="del" shiro:hasPermission="project:delete"><i class="layui-icon febs-edit-area febs-red">&#xe7f9;</i></a>
+    <a lay-event="del" shiro:hasPermission="dataset:delete"><i class="layui-icon febs-edit-area febs-red">&#xe7f9;</i></a>
 </script>
 
 
-<script type="text/html" id="project-dailyLimit">
+<script type="text/html" id="dataset-status">
+    {{#
+    var status = {
+    1: {title: '正常', color: 'green'},
+    0: {title: '停用', color: 'volcano'}
+    }[d.status];
+    }}
+    <span class="layui-badge febs-tag-{{status.color}}">{{ status.title }}</span>
+</script>
+
+<script type="text/html" id="dataSource-timeout">
     <div>
-        {{# if (d.dailyLimit <= -1) { }}
-        <span class="layui-badge febs-tag-green">无限流</span>
-        {{# } else if (d.dailyLimit > 0) { }}
-        <span class="layui-badge febs-tag-orange">限流 {{d.dailyLimit}}</span>
+        {{# if (d.timeout < 30000) { }}
+        <span class="layui-badge febs-tag-green">{{d.timeout}} ms</span>
         {{# } else { }}
-        <span class="layui-badge febs-tag-red">限流 {{d.dailyLimit}}</span>
+        <span class="layui-badge febs-tag-orange">{{d.timeout}} ms</span>
         {{# } }}
+    </div>
+</script>
+
+<script type="text/html" id="dataSource-sleepInterval">
+    <div>
+        <span class="layui-badge febs-tag-green">{{d.sleepInterval}} ms</span>
     </div>
 </script>
 
@@ -81,7 +97,7 @@
             table = layui.table,
             dropdown = layui.dropdown,
             //每一层view有自己唯一的id #febs-entity，因为先定位view，在定义子元素，故view下元素id可以重复
-            $view = $('#febs-project'),
+            $view = $('#febs-dataset'),
             $query = $view.find('#query'),
             $reset = $view.find('#reset'),
             $searchForm = $view.find('form'),
@@ -93,7 +109,7 @@
         initTable();
 
         laydate.render({
-            elem: '#createTime-project',
+            elem: '#createTime-dataset',
             range: true,
             trigger: 'click'
         });
@@ -101,16 +117,16 @@
         dropdown.render({
             elem: $view.find('.action-more'),
             click: function (name, elem, event) {
-                var checkStatus = table.checkStatus('projectTable');
+                var checkStatus = table.checkStatus('datasetTable');
                 if (name === 'add') {
-                    febs.modal.open('新增项目', 'project/add', {
+                    febs.modal.open('新增项目', 'dataset/add', {
                         btn: ['提交', '重置'],
                         area: $(window).width() <= 750 ? '95%' : '50%',
                         yes: function (index, layero) {
-                            $('#project-add').find('#submit').trigger('click');
+                            $('#dataset-add').find('#submit').trigger('click');
                         },
                         btn2: function () {
-                            $('#project-add').find('#reset').trigger('click');
+                            $('#dataset-add').find('#reset').trigger('click');
                             return false;
                         }
                     });
@@ -132,29 +148,29 @@
                     var params = $.extend(getQueryParams(), {field: sortObject.field, order: sortObject.type});
                     params.pageSize = $view.find(".layui-laypage-limits option:selected").val();
                     params.pageNum = $view.find(".layui-laypage-em").next().html();
-                    febs.download(ctx + 'project/excel', params, 'project.xlsx');
+                    febs.download(ctx + 'dataset/excel', params, 'dataset.xlsx');
                 }
             },
             options: [{
                 name: 'add',
                 title: '新增',
-                perms: 'project:add'
+                perms: 'dataset:add'
             }, {
                 name: 'delete',
                 title: '删除',
-                perms: 'project:delete'
+                perms: 'dataset:delete'
             }, {
                 name: 'export',
                 title: '导出Excel',
-                perms: 'project:export'
+                perms: 'dataset:export'
             }]
         });
 
-        table.on('tool(projectTable)', function (obj) {
+        table.on('tool(datasetTable)', function (obj) {
             var data = obj.data,
                 layEvent = obj.event;
             if (layEvent === 'detail') {
-                febs.modal.view('查看', 'project/view/' + data.id, {
+                febs.modal.view('查看', 'dataset/view/' + data.id, {
                     area: $(window).width() <= 750 ? '95%' : '660px'
                 });
             }
@@ -164,11 +180,11 @@
                 });
             }
             if (layEvent === 'edit') {
-                febs.modal.open('修改', 'project/update/' + data.id, {
+                febs.modal.open('修改', 'dataset/update/' + data.id, {
                     area: $(window).width() <= 750 ? '90%' : '50%',
                     btn: ['提交', '取消'],
                     yes: function (index, layero) {
-                        $('#project-update').find('#submit').trigger('click');
+                        $('#dataset-update').find('#submit').trigger('click');
                     },
                     btn2: function () {
                         layer.closeAll();
@@ -177,13 +193,13 @@
             }
             //注意1-N的这种写法，弹出层不允许挂参数
             if (layEvent === 'process') {
-                febs.modal.open('流程管理',ctx +  'project/' + data.id + '/process', {
+                febs.modal.open('流程管理',ctx +  'dataset/' + data.id + '/process', {
                     area: ['100%','100%']
                 });
             }
         });
 
-        table.on('sort(projectTable)', function (obj) {
+        table.on('sort(datasetTable)', function (obj) {
             sortObject = obj;
             tableIns.reload({
                 initSort: obj,
@@ -208,16 +224,22 @@
         function initTable() {
             tableIns = febs.table.init({
                 elem: $view.find('table'),
-                id: 'projectTable',
-                url: ctx + 'project/list',
+                id: 'datasetTable',
+                url: ctx + 'dataset/list',
                 cols: [[
                     {type: 'checkbox'},
-                    {field: 'code', title: '编码', minWidth: 100},
+                    {field: 'dataSourceCode', title: '数据源编码', minWidth: 100},
+                    {field: 'code', title: '编码', minWidth: 30},
+                    {field: 'type', title: '类型', minWidth: 30},
+                    {field: 'path', title: 'PATH', minWidth: 100},
+                    {field: 'method', title: '方法', minWidth: 30},
+                    {field: 'timeout', title: '超时', minWidth: 30, templet: "#dataSource-timeout"},
+                    {field: 'retryTimes', title: '重试次数', minWidth: 30},
+                    {field: 'sleepInterval', title: '重试间隔', minWidth: 30, templet: '#dataSource-sleepInterval'},
+                    {field: 'status', title: '状态', minWidth: 50, templet: '#dataset-status'},
                     {field: 'comments', title: '描述'},
-                    {field: 'dailyLimit', title: '日限流', minWidth: 165, templet: "#project-dailyLimit"},
-                    {field: 'price', title: '单价(分)', minWidth: 180},
                     {field: 'createTime', title: '创建时间', minWidth: 180, sort: true},
-                    {title: '操作', toolbar: '#project-option', minWidth: 140}
+                    {title: '操作', toolbar: '#dataset-option', minWidth: 150},
                 ]]
             });
         }
@@ -240,7 +262,7 @@
 
         function deleteSelectEntity(selIds) {
             var params = {ids: selIds};
-            febs.post(ctx + 'project/batchDelete', params, function () {
+            febs.post(ctx + 'dataset/batchDelete', params, function () {
                 febs.alert.success('删除成功');
                 $query.click();
             });

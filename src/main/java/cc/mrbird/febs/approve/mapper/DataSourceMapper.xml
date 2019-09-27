@@ -4,12 +4,14 @@
 
     <resultMap id="dataSource" type="cc.mrbird.febs.approve.entity.DataSource">
         <id column="id" jdbcType="bigint" property="id"/>
-        <result column="code" jdbcType="varchar" property="code"/>
-        <result column="comments" jdbcType="varchar" property="comments"/>
         <result column="type" jdbcType="varchar" property="type"/>
+        <result column="code" jdbcType="varchar" property="code"/>
+        <result column="dynamic_host" jdbcType="int" property="dynamicHost"/>
+        <result column="host" jdbcType="varchar" property="host"/>
         <result column="url" jdbcType="varchar" property="url"/>
-        <result column="user" jdbcType="varchar" property="user"/>
-        <result column="pwd" jdbcType="varchar" property="pwd"/>
+        <result column="subject" jdbcType="varchar" property="subject"/>
+        <result column="certificate" jdbcType="varchar" property="certificate"/>
+        <result column="comments" jdbcType="varchar" property="comments"/>
         <result column="create_time" jdbcType="datetime" property="createTime"/>
         <result column="update_time" jdbcType="datetime" property="updateTime"/>
     </resultMap>

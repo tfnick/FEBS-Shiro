@@ -18,6 +18,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -62,12 +63,19 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
     @Override
     @Transactional
     public void createProject(Project project) {
+        Date operationDate = new Date();
+        project.setCreateTime(operationDate);
+        project.setUpdateTime(operationDate);
+
         this.save(project);
     }
 
     @Override
     @Transactional
     public void updateProject(Project project) {
+        Date operationDate = new Date();
+        project.setUpdateTime(operationDate);
+
         this.saveOrUpdate(project);
     }
 

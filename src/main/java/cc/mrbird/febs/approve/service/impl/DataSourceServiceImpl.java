@@ -15,12 +15,13 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import java.util.List;
+import java.util.Date;
 
 /**
  *  Service实现
  *
  * @author YangXiao
- * @date 2019-09-27 11:47:09
+ * @date 2019-09-27 15:50:33
  */
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
@@ -33,6 +34,7 @@ public class DataSourceServiceImpl extends ServiceImpl<DataSourceMapper, DataSou
     public IPage<DataSource> findDataSources(QueryRequest request, DataSource dataSource) {
         QueryWrapper<DataSource> queryWrapper = new QueryWrapper<>();
         // TODO 设置查询条件
+
         Page<DataSource> page = new Page<>(request.getPageNum(), request.getPageSize());
         return this.page(page, queryWrapper);
     }
@@ -41,18 +43,26 @@ public class DataSourceServiceImpl extends ServiceImpl<DataSourceMapper, DataSou
     public List<DataSource> findDataSources(DataSource dataSource) {
         QueryWrapper<DataSource> queryWrapper = new QueryWrapper<>();
 		// TODO 设置查询条件
+
 		return this.baseMapper.selectList(queryWrapper);
     }
 
     @Override
     @Transactional
     public void createDataSource(DataSource dataSource) {
+        Date operationDate = new Date();
+        dataSource.setCreateTime(operationDate);
+        dataSource.setUpdateTime(operationDate);
+
         this.save(dataSource);
     }
 
     @Override
     @Transactional
     public void updateDataSource(DataSource dataSource) {
+        Date operationDate = new Date();
+        dataSource.setUpdateTime(operationDate);
+
         this.saveOrUpdate(dataSource);
     }
 
@@ -61,6 +71,7 @@ public class DataSourceServiceImpl extends ServiceImpl<DataSourceMapper, DataSou
     public void deleteDataSource(DataSource dataSource) {
         QueryWrapper<DataSource> wapper = new QueryWrapper<>();
 	    // TODO 设置删除条件
+
 	    this.remove(wapper);
 	}
 }
