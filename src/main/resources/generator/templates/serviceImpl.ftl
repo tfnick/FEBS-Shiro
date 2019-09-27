@@ -59,7 +59,7 @@ public class ${className}ServiceImpl extends ServiceImpl<${className}Mapper, ${c
     @Override
     @Transactional
     public void delete${className}(${className} ${className?uncap_first}) {
-        LambdaQueryWrapper<${className}> wapper = new LambdaQueryWrapper<>();
+        QueryWrapper<${className}> wapper = new QueryWrapper<>();
 	    // TODO 设置删除条件
 	    this.remove(wapper);
 	}
