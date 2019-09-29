@@ -1,4 +1,4 @@
-<div class="layui-fluid layui-anim febs-anim" id="febs-input" lay-title="入参管理">
+<div class="layui-fluid layui-anim febs-anim" id="febs-input" lay-title="Input管理">
     <div class="layui-row layui-col-space8 febs-container">
         <div class="layui-col-md7 layui-col-sm6 layui-col-xs12">
             <div class="layui-card">
@@ -44,16 +44,16 @@
                         <input type="hidden" name ="datasetId" value="">
 
                         <div class="layui-form-item">
-                            <label class="layui-form-label febs-form-item-require">入参名：</label>
+                            <label class="layui-form-label febs-form-item-require">参数名：</label>
                             <div class="layui-input-block">
-                                <input type="text" name="key" lay-verify="required" maxlength="200" autocomplete="off" class="layui-input" placeholder="参数名 例：a0a1_age">
+                                <input type="text" name="paramName" lay-verify="required" maxlength="200" autocomplete="off" class="layui-input" placeholder="参数名 例：age">
                             </div>
                         </div>
 
                         <div class="layui-form-item">
                             <label class="layui-form-label febs-form-item-require">表达式：</label>
                             <div class="layui-input-block">
-                                <input type="text" name="valExpression" lay-verify="required" maxlength="200" autocomplete="off" class="layui-input" placeholder="上下文取值表达式 例：$.foo[0].bar">
+                                <input type="text" name="valExpression" lay-verify="required" maxlength="200" autocomplete="off" class="layui-input" placeholder="上下文取值表达式 例：$.foo.bar">
                             </div>
                         </div>
 
@@ -165,7 +165,7 @@
                 form.val("input-form", {
                     "id": data.id,
                     "datasetId": data.datasetId,
-                    "key": data.key,
+                    "paramName": data.paramName,
                     "valExpression": data.valExpression
                 });
             }
@@ -196,11 +196,11 @@
                 elem: $view.find('table'),
                 id: 'inputTable',
                 url: ctx + 'input/list',
-                where: {},
+                where: {datasetId: datasetId},
                 //type space to fix layui thymeleaf conflict
                 cols: [ [
                     {type: 'checkbox'},
-                    {field: 'key', title: '入参名', minWidth: 100},
+                    {field: 'paramName', title: '参数名', minWidth: 100},
                     {field: 'valExpression', title: '取值表达式'},
                     {field: 'updateTime', title: '更新时间', minWidth: 100, sort: true},
                     {title: '操作', toolbar: '#input-option', minWidth: 50}
@@ -217,6 +217,7 @@
                 createTimeTo = createTime.split(' - ')[1];
             }
             return {
+                datasetId: datasetId,
                 createTimeFrom: createTimeFrom,
                 createTimeTo: createTimeTo,
                 invalidate_ie_cache: new Date()

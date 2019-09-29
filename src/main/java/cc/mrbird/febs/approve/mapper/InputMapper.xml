@@ -5,7 +5,7 @@
     <resultMap id="input" type="cc.mrbird.febs.approve.entity.Input">
         <id column="id" jdbcType="bigint" property="id"/>
         <result column="dataset_id" jdbcType="bigint" property="datasetId"/>
-        <result column="key" jdbcType="varchar" property="key"/>
+        <result column="param_name" jdbcType="varchar" property="paramName"/>
         <result column="val_expression" jdbcType="varchar" property="valExpression"/>
         <result column="create_time" jdbcType="datetime" property="createTime"/>
         <result column="update_time" jdbcType="datetime" property="updateTime"/>

@@ -35,7 +35,7 @@ import java.util.Map;
  *  Controller
  *
  * @author YangXiao
- * @date 2019-09-27 23:59:10
+ * @date 2019-09-29 10:43:41
  */
 @Slf4j
 @Validated
@@ -48,7 +48,7 @@ public class OutputController extends BaseController {
     @Autowired
     private IDatasetService datasetService;
 
-    @GetMapping(FebsConstant.VIEW_PREFIX + "output")
+    @GetMapping(FebsConstant.VIEW_PREFIX + "dataset/{datasetId}/output")
     @RequiresPermissions("output:list")
     public String outputIndex(@NotBlank(message = "{required}") @PathVariable String datasetId, Model model){
         Dataset dataset = this.datasetService.getById(datasetId);

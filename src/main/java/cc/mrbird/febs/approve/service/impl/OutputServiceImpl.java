@@ -21,7 +21,7 @@ import java.util.Date;
  *  Service实现
  *
  * @author YangXiao
- * @date 2019-09-27 23:59:10
+ * @date 2019-09-29 10:43:41
  */
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
@@ -34,6 +34,7 @@ public class OutputServiceImpl extends ServiceImpl<OutputMapper, Output> impleme
     public IPage<Output> findOutputs(QueryRequest request, Output output) {
         QueryWrapper<Output> queryWrapper = new QueryWrapper<>();
         // TODO 设置查询条件
+        queryWrapper.lambda().eq(Output::getDatasetId, output.getDatasetId());
 
         Page<Output> page = new Page<>(request.getPageNum(), request.getPageSize());
         return this.page(page, queryWrapper);

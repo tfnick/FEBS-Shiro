@@ -15,7 +15,7 @@ import cc.mrbird.febs.common.converter.TimeConverter;
  *  Entity
  *
  * @author YangXiao
- * @date 2019-09-27 23:59:06
+ * @date 2019-09-29 10:43:35
  */
 @Excel(value = "input")
 @Data
@@ -39,9 +39,9 @@ public class Input {
     /**
      * 键值
      */
-    @TableField("key")
-    @ExcelField(value = "key")
-    private String key;
+    @TableField("param_name")
+    @ExcelField(value = "param_name")
+    private String paramName;
 
     /**
      * 取值表达式${foo.bar}
