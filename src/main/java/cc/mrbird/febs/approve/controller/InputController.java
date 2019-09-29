@@ -1,5 +1,7 @@
 package cc.mrbird.febs.approve.controller;
 
+import cc.mrbird.febs.approve.entity.Dataset;
+import cc.mrbird.febs.approve.service.IDatasetService;
 import cc.mrbird.febs.common.annotation.Log;
 import cc.mrbird.febs.common.utils.FebsUtil;
 import cc.mrbird.febs.common.entity.FebsConstant;
@@ -42,10 +44,17 @@ public class InputController extends BaseController {
 
     @Autowired
     private IInputService inputService;
+    @Autowired
+    private IDatasetService datasetService;
 
-    @GetMapping(FebsConstant.VIEW_PREFIX + "input")
+    @GetMapping(FebsConstant.VIEW_PREFIX + "dataset/{datasetId}/input")
     @RequiresPermissions("input:list")
-    public String inputIndex(){
+    public String inputIndex(@NotBlank(message = "{required}") @PathVariable String datasetId, Model model){
+        Dataset dataset = this.datasetService.getById(datasetId);
+        if (dataset == null) {
+            return FebsUtil.view("error/500");
+        }
+        model.addAttribute("datasetId", datasetId);
         return FebsUtil.view("input/input");
     }
 

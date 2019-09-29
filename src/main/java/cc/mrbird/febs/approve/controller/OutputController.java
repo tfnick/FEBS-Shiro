@@ -1,5 +1,7 @@
 package cc.mrbird.febs.approve.controller;
 
+import cc.mrbird.febs.approve.entity.Dataset;
+import cc.mrbird.febs.approve.service.IDatasetService;
 import cc.mrbird.febs.common.annotation.Log;
 import cc.mrbird.febs.common.utils.FebsUtil;
 import cc.mrbird.febs.common.entity.FebsConstant;
@@ -43,9 +45,17 @@ public class OutputController extends BaseController {
     @Autowired
     private IOutputService outputService;
 
+    @Autowired
+    private IDatasetService datasetService;
+
     @GetMapping(FebsConstant.VIEW_PREFIX + "output")
     @RequiresPermissions("output:list")
-    public String outputIndex(){
+    public String outputIndex(@NotBlank(message = "{required}") @PathVariable String datasetId, Model model){
+        Dataset dataset = this.datasetService.getById(datasetId);
+        if (dataset == null) {
+            return FebsUtil.view("error/500");
+        }
+        model.addAttribute("datasetId", datasetId);
         return FebsUtil.view("output/output");
     }
 

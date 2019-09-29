@@ -192,8 +192,13 @@
                 });
             }
             //注意1-N的这种写法，弹出层不允许挂参数
-            if (layEvent === 'process') {
-                febs.modal.open('流程管理',ctx +  'dataset/' + data.id + '/process', {
+            if (layEvent === 'input') {
+                febs.modal.open('入参管理',ctx +  'dataset/' + data.id + '/input', {
+                    area: ['100%','100%']
+                });
+            }
+            if (layEvent === 'output') {
+                febs.modal.open('出参管理',ctx +  'dataset/' + data.id + '/output', {
                     area: ['100%','100%']
                 });
             }
